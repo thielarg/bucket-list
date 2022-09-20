@@ -1,13 +1,70 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BucketList</title>
-</head>
-<body>
-<h1>Testou</h1>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Testou</h1>
+    <h2>Balises et delimiteurs</h2>
+    <div>
+        {# creer une variable #}
+        {% set name="thierry" %}
+        <h2>{{ name }}</h2>
+
+        {# creer un tableau #}
+        {% set colors=["orange", "brown", "turquoise", "blue" ] %}
+        {% for color in colors %}
+            <div style="background-color: {{ color }}">{{ color }}</div>
+        {% endfor %}
+
+        {# un objet #}
+        {%  set book ={
+            title:"PifPaf",
+            year:2000,
+            author:"John Doe"
+        } %}
+        <h3>{{ book.author }}</h3>
+        <div>
+            {% for key, val in book %}
+            <div>{{ key }} : {{ val }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <h2>Filtres</h2>
+    <div>
+        <div>{{ 'now'|date('Y') }}</div>
+        <div>{{ '+1 year'|date('Y') }}</div>
+        {# creer une variable #}
+        {% set name="thierry" %}
+        <h2>{{ name|upper }}</h2>
+        <h2>{{ name|length }}</h2>
+
+        {# creer un tableau #}
+        {% set colors=["orange", "brown", "turquoise", "blue" ] %}
+        <div>nombre de couleurs : </div>{{ colors|length }}
+        <div>{{ colors|join(' / ') }}</div>
+
+        {% for color in colors %}
+            {% if (loop.last) %}
+                <div>{{ "dernier passage" }}</div>
+            {% else %}
+                <div>{{ loop.index }}</div>
+            {% endif %}
+            <div style="background-color: {{ color }}">{{ color }}</div>
+        {% endfor %}
+
+        {# un objet #}
+        {%  set book ={
+            title:"PifPaf",
+            year:2000,
+            author:"John Doe"
+        } %}
+        <h3>{{ book.author }}</h3>
+        <div>
+            {% for key, val in book %}
+                <div>{{ key }} : {{ val }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | test
+{% endblock %}
