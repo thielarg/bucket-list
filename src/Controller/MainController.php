@@ -9,7 +9,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
 
-    // premier argument l'url, deuxieme argument le nom de la route
+    // premier argument l'url souhaite (doit etre unique), deuxieme argument le nom de la route (name) - convention :
+    // nomDuControleur_nomDeLaMethode - , requirements (definie l'expression rationnelle definie ce qui est attendu, definie une methods)
+    //@Route("/utilisateur/profil/{id}", requirements={"id","\d+"}, name="product_detail)
+    //public function detail($id)
+    //valeur par defaut
+    //@Route("/utilisateur/profil/{page}")
+    //public function listUsers($page=1)
+
+    //routes et la console
+    //--afficher la liste des routes
+    // php bin/console debug:router
+    //--afficher les details d'une route
+    // php bin/console debug:router nomDeLaRoute
+    //--tester le match entre une URL et une route
+    // php bin/console router:match /url_a_tester
+
     /**
      * @Route("/", name="main_home")
      */
