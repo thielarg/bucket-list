@@ -6,20 +6,32 @@
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}BucketList{% endblock %}></title>
+    <!-- google font -->
+    <!-- https://fonts.google.com/specimen/Crimson+Text?query=dancing -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- gomme toutes les différences qu'il y a entre les navigateurs -->
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.jpg') }}">
 </head>
 <body>
-    <header>
-        <h1>BucketList</h1>
-        {% include('inc/nav.html.twig') %}
-    </header>
+    <div class="container">
+        <header>
+            <h1><a href="{{ path('main_home') }}"><img src="{{ asset('images/logo.jpg')}}" width="100" alt="BucketList">Bucket-List</a></h1>
+            {% include('inc/nav.html.twig') %}
+        </header>
 
-    <main>
-        {%  block body %}{% endblock %}
-    </main>
+        <main>
+            {%  block body %}{% endblock %}
+        </main>
 
-    <footer>
-        {% include('inc/nav.html.twig') %}
-        <div>&copy; {{ "now"|date('Y') }} BucketList</div>
-    </footer>
+        <footer>
+            {% include('inc/nav.html.twig') %}
+            <div>&copy; {{ "now"|date('Y') }} BucketList</div>
+        </footer>
+    </div>
 </body>
 </html>

@@ -63,6 +63,27 @@
             {% endfor %}
         </div>
     </div>
+    <h2>Passage de variables à la vue</h2>
+    <p>Bonjour {{ username }}</p>
+    <div>{{ productCount }} produits disponibles.</div>
+    <div>{{ myBucketList.title }}</div>
+
+    <!-- les attaques XSS (Cross-Site Scripting)-->
+    <!-- prenons l'exemple d'un commentaire dans un formulaire dans un blog dans lequel serait injecté du html.
+    Ce commentaire est stocké dans la BDD. Ensuite on le réaffiche sans l'avoir filtré. On va afficher le code HTML et
+    il sera interprété par le navigateur. Imaginez une image de 3000 pixels, ou pire avec une balise script en nous
+    injectant du javascript-->
+    <!-- pour se proteger en PHP, il faudrait passer par la balise htmlentities
+        ex : <?php echo htmlentities($variable); ?>
+    -->
+    <!-- sous twig cette protection est déjà là par defaut -->
+    <!-- on peut souhaiter mettre du html en BDD -> employez le filtre raw (mais on fait confiance au personne du site)
+        on peut aussi avoir besoin d'enlever les balise html -> filtre striptags
+        si on on souhaite garder le html mais que l'on ne fait pas confiance -> se tourner vers des librairies externes
+        HTMLPurifier, pour garder ques certaines balises (https://packagist.org/packages/exercise/htmlpurifier-bundle)
+    -->
+    <div>{{ myBucketList.title|raw }}</div>
+
 {% endblock %}
 
 {% block title %}
