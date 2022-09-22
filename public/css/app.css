@@ -59,6 +59,14 @@ img {
 max-width: 100%;
 }
 
+.series-list{
+/*affichage des posters en cadrillage */
+    display: grid;
+/*un espace entre deux */
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill,minmax(140px, 1fr));
+}
+
 footer {
 background-color: #5eb5e0;
 padding: 0px 5px;

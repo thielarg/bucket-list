@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section>
-        todo: afficher la liste des choses à faire
+    <section class="series-list">
+        {% for serie in series %}
+            <article>
+                <a href="{{ path('bucketList_details',{'id': serie.id}) }}" title="View serie's details">
+                    <img src="{{ asset('images/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
+                </a>
+            </article>
+        {% endfor %}
     </section>
 {% endblock %}
 

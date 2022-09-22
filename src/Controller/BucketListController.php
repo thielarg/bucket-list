@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
+use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,22 +18,28 @@ class BucketListController extends AbstractController
     /**
      * @Route("", name="list")
      */
-    public function list(): Response
+    public function list(SerieRepository $serieRepository): Response
     {
-        //todo : aller chercher les choses à faire en BDD
+        //aller chercher les choses à faire en BDD
+        //$series=$serieRepository->findAll();
+        $series=$serieRepository->findBy([],['genres'=>'ASC','vote'=>'DESC'],30);
+        //$series=$serieRepository->findBy([],['genres'=>'ASC','vote'=>'DESC'],30, 10); //de 10 à 30 pagination
+        //dd($series);
         return $this->render('bucket_list/list.html.twig', [
-
+            "series"=>$series,
         ]);
     }
 
     /**
      * @Route("/details/{id}", name="details")
      */
-    public function details(int $id): Response
+    public function details(int $id,SerieRepository $serieRepository): Response
     {
-        //todo : aller chercher une chose à faire en BDD
-        return $this->render('bucket_list/details.html.twig', [
+        //aller chercher une chose à faire en BDD
+        $serie = $serieRepository->find($id);
 
+        return $this->render('bucket_list/details.html.twig', [
+            "serie"=>$serie,
         ]);
     }
 
