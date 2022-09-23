@@ -22,8 +22,11 @@ class BucketListController extends AbstractController
     {
         //aller chercher les choses à faire en BDD
         //$series=$serieRepository->findAll();
-        $series=$serieRepository->findBy([],['genres'=>'ASC','vote'=>'DESC'],30);
+        //$series=$serieRepository->findBy([],['genres'=>'ASC','vote'=>'DESC'],30);
         //$series=$serieRepository->findBy([],['genres'=>'ASC','vote'=>'DESC'],30, 10); //de 10 à 30 pagination
+
+        //avec DQL
+        $series=$serieRepository->findBestSeries();
         //dd($series);
         return $this->render('bucket_list/list.html.twig', [
             "series"=>$series,
@@ -60,7 +63,7 @@ class BucketListController extends AbstractController
     /**
      * @Route("/demo", name="demo")
      */
-    public function demo(EntityManagerInterface $entityManager): Response
+    public function demo(EntityManagerInterface $entityManager, SerieRepository $serieRepository): Response
     {
         //creer une instance de mon entité
         $serie = new Serie();
@@ -82,9 +85,10 @@ class BucketListController extends AbstractController
         dump($serie);
 
         //insertion des données
-        $entityManager->persist($serie);
-        $entityManager->flush();
-
+        //$entityManager->persist($serie);
+        //$entityManager->flush();
+        //je peut utiliser la fonction add du repository
+        $serieRepository->add($serie);
         //dump($serie);
 
         //modifier les données
@@ -95,6 +99,8 @@ class BucketListController extends AbstractController
         //supprimer l'enregistrement
         //$entityManager->remove($serie);
         //$entityManager->flush();
+        //je peut utiliser la fonction add du repository
+        $serieRepository->remove($serie);
 
         return $this->render('bucket_list/create.html.twig', [
 

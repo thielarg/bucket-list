@@ -47,6 +47,43 @@ class SerieRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBestSeries(){
+        /*//en DQL
+        $entityManager = $this->getEntityManager();
+        $dql = "
+            SELECT s
+            FROM App\Entity\Serie s
+            WHERE s.popularity > 100
+            AND s.vote > 8
+            ORDER BY s.popularity DESC
+        ";
+        //je crée un objet Query à partire ce cette requete DQL
+        $query = $entityManager->createQuery($dql);
+        //on va vouloir limiter le nombre de resultats
+        $query->setMaxResults(50);
+        //je recupere mes resultats (un tableau contenant tous les elements)
+        $result = $query->getResult();
+        //si je ne veut recuperer qu'un seul resultat
+        //$result = $query->getOneOrNullResult();
+        //dump($result);
+        return $result;
+*/
+        //version queryBuilder
+        $queryBuilder= $this->createQueryBuilder('s');
+        $queryBuilder->andWhere('s.popularity > 100');
+        $queryBuilder->andWhere('s.vote > 8');
+        $queryBuilder->addOrderBy('s.popularity','DESC');
+        $query=$queryBuilder->getQuery();
+
+        $query->setMaxResults(50);
+        $result = $query->getResult();
+        //si je ne veut recuperer qu'un seul resultat
+        //$result = $query->getOneOrNullResult();
+        //dump($result);
+        return $result;
+
+    }
+
     // /**
     //  * @return Serie[] Returns an array of Serie objects
     //  */
