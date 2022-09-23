@@ -82,3 +82,26 @@ button {
     color: green;
     margin: 5px 50px;
 }
+
+label{
+    display: block;
+}
+
+input, textarea, select{
+    margin-bottom: 1em;
+    box-sizing: border-box; /*leur donner une taille */
+    max-width: 50%;
+    width: 200px;
+}
+
+.flash{
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin: 1rem 0;
+    border-radius: 5px;
+}
+
+.flash-success{
+    background-color: lawngreen;
+}

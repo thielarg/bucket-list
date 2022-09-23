@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
+use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,14 +50,33 @@ class BucketListController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         //dump("yo");
         //dd("yo");
-        dump($request);
+        //dump($request);
+
+        $serie = new Serie();
+        //hydrate les champs non null en BDD
+        $serie->setDateCreated(new \DateTime());
+
+        $serieForm = $this->createForm(SerieType::class,$serie);
+
+        //dump($serie);
+        $serieForm->handleRequest($request);
+        //dump($serie);
+        //traiter le formulaire
+        if ($serieForm->isSubmitted() && $serieForm->isValid()){
+            $entityManager->persist($serie);
+            $entityManager->flush();
+
+            $this->addFlash('success','serie added. Good job.');
+            return $this->redirectToRoute('bucketList_details',['id'=>$serie->getId()]);
+        }
+
         //todo : créer une chose à faire en BDD
         return $this->render('bucket_list/create.html.twig', [
-
+            'serieForm'=>$serieForm->createView()
         ]);
     }
 
